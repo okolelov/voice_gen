@@ -1,38 +1,64 @@
 from gtts import gTTS
+import customtkinter
+import sys
 from tkinter import *
 #voice generater functions
+
+def escape():
+	sys.exit()
+
 def generate():
     tts = gTTS(text.get(),lang='ru')
     t = name.get()
     tts.save(t+'.mp3')
 
-def EngGen():
-    tts = gTTS(text.get(),lang='en')
-    t = name.get()
-    tts.save(t+'.mp3')
+
 
 #window and buttons
 window = Tk()
-window.title('')#title name
-window.geometry('430x200')
+window.title('Генерация речи из текста')#title name
+window.geometry('900x500')
 window.resizable(width=False, height=False)
-but = Button(window,text='',command=generate,fg='#eee',bg='#333')
-ButEng = Button(window,text='',command=EngGen,fg='#eee',bg='#333') 
+window['bg'] = '#2d2d2d'
+customtkinter.set_appearance_mode('dark')
+
+but = customtkinter.CTkButton(master=window,text='Озвучить',command=generate)
+exit_but = customtkinter.CTkButton(master=window,text='Выход',command=escape)
 #text input windows
-text = Entry(width=30)
-name = Entry(width=30)
+text = customtkinter.CTkEntry(master=window,width=100)
+name = customtkinter.CTkTextbox(master=window,width=600)
 
-textlab = Label(text='',fg='#eee',bg='#333')#what needs to be voiced
-namelab = Label(text='',fg='#eee',bg='#333')#file name
+textlab = customtkinter.CTkLabel(master=window,text='Текст')#what needs to be voiced
+namelab = customtkinter.CTkLabel(master=window,text='Название файла')#file name
 
-authorLab = Label(text='',fg='#eee',bg='#333')
+authorLab = customtkinter.CTkLabel(master=window,text='Автор Илья Околелов')
 
-namelab.place(x=0,y=18)
-textlab.place(x=0,y=0)              
-text.pack()
-name.pack()
-but.place(x=120,y=50)
-ButEng.place(x=120,y=70)
-authorLab.place(x=0,y=180)
+namelab.place(relx=0.25, 
+	          rely=0.05,
+	          anchor=CENTER)
+
+textlab.place(relx=0.13, 
+	          rely=0.32,
+	          anchor=CENTER)             
+
+text.place(relx=0.38, 
+	      rely=0.05,
+	      anchor=CENTER)
+
+name.place(relx=0.5, 
+	      rely=0.3,
+	      anchor=CENTER)
+
+but.place(relx=0.5, 
+	      rely=0.6,
+	      anchor=CENTER)
+
+exit_but.place(relx=0.5, 
+	           rely=0.75,
+	           anchor=CENTER)
+
+authorLab.place(relx=0.01, 
+	      		rely=0.98,
+	      		anchor=SW)
 
 window.mainloop()
